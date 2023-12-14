@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
-    <Product>PleOps</Product>
+    <Product>OpenWFCsharp</Product>
     <Authors>pleonex</Authors>
     <Company>None</Company>
-    <Copyright>Copyright (C) 2020 Benito Palacios Sánchez</Copyright>
+    <Copyright>Copyright (C) 2023 pleonex</Copyright>
 
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
 
@@ -14,10 +14,10 @@
 
   <PropertyGroup>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/pleonex/template-csharp</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/pleonex/template-csharp</RepositoryUrl>
-    <PackageIcon>icon.png</PackageIcon>
-    <PackageTags>net;csharp;devops;pipeline;github-actions</PackageTags>
+    <PackageProjectUrl>https://github.com/pleonex/OpenWFCsharp</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/pleonex/OpenWFCsharp</RepositoryUrl>
+    <!-- <PackageIcon>icon.png</PackageIcon> -->
+    <PackageTags>dwc;wfc;</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 

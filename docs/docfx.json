@@ -4,7 +4,7 @@
       "src": [
         {
           "files": [
-            "MyLibrary/*.csproj"
+            "OpenWFCsharp.Backend/*.csproj"
           ],
           "src": "../src"
         }
@@ -39,11 +39,11 @@
     ],
     "output": "_site",
     "globalMetadata": {
-      "_appTitle": ".NET project template",
-      "_appName": ".NET project template",
-      "_appFooter": "<span>Copyright (c) 2019 Benito Palacios Sánchez. Docs made with <a href=\"https://dotnet.github.io/docfx\" target=\"_blank\">docfx</a></span>",
-      "_appLogoPath": "images/logo_48.png",
-      "_appFaviconPath": "images/favicon.png",
+      "_appTitle": "OpenWFCsharp",
+      "_appName": "OpenWFCsharp",
+      "_appFooter": "<span>Copyright (c) 2023 pleonex. Docs made with <a href=\"https://dotnet.github.io/docfx\" target=\"_blank\">docfx</a></span>",
+      "_appLogoPath": "images/logo_32.png",
+      "_appFaviconPath": "images/logo_32.png",
       "_enableSearch": true,
       "_enableNewTab": true,
       "_lang": "en"
@@ -58,7 +58,7 @@
     "keepFileLink": false,
     "disableGitFeatures": false,
     "sitemap": {
-      "baseUrl": "https://pleonex.dev/template-csharp",
+      "baseUrl": "https://pleonex.dev/OpenWFCsharp",
       "priority": 0.5,
       "changefreq": "monthly"
     }

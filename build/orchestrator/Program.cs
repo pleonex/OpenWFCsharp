@@ -13,17 +13,15 @@ public sealed class BuildLifetime : FrostingLifetime<PleOpsBuildContext>
 {
     public override void Setup(PleOpsBuildContext context, ISetupContext info)
     {
-        // HERE you can set default values overridable by command-line
-        // TODO EXAMPLE: context.WarningsAsErrors = false;
+        // TODO: disable quality checks while prototyping.
+        context.WarningsAsErrors = false;
+        context.DotNetContext.CoverageTarget = 0;
+
         context.DotNetContext.ApplicationProjects.Add(new ProjectPublicationInfo(
-            "./src/MyConsole", new[] { "win-x64", "linux-x64", "osx-x64" }, "net8.0"));
+            "./src/OpenWFCsharp.Backend", [ "win-x64", "linux-x64", "osx-x64" ], "net8.0"));
 
         // Update build parameters from command line arguments.
         context.ReadArguments();
-
-        // HERE you can force values non-overridable.
-        context.DotNetContext.PreviewNuGetFeed = "https://pkgs.dev.azure.com/benito356/NetDevOpsTest/_packaging/Example-Preview/nuget/v3/index.json";
-        context.DotNetContext.StableNuGetFeed = "https://pkgs.dev.azure.com/benito356/NetDevOpsTest/_packaging/Example-Preview/nuget/v3/index.json";
 
         // Print the build info to use.
         context.Print();

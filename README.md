@@ -1,17 +1,9 @@
-# .NET project template
+# OpenWFCsharp
 
 <!-- markdownlint-disable MD033 -->
 <p align="center">
-  <a href="https://dev.azure.com/benito356/NetDevOpsTest/_packaging?_a=package&feed=e3acf8ba-ec70-46f0-b1a5-da1ce3dd5d9f&package=b8696a32-e71a-4479-9b0e-002997b8d8ef&preferRelease=true">
-    <img alt="Stable version" src="https://feeds.dev.azure.com/benito356/339c91a8-9d6c-4082-8b1a-93c2ae76b637/_apis/public/Packaging/Feeds/e3acf8ba-ec70-46f0-b1a5-da1ce3dd5d9f/Packages/b8696a32-e71a-4479-9b0e-002997b8d8ef/Badge" />
-  </a>
-  &nbsp;
-  <a href="https://dev.azure.com/benito356/NetDevOpsTest/_artifacts/feed/Example-Preview">
-    <img alt="GitHub commits since latest release (by SemVer)" src="https://img.shields.io/github/commits-since/pleonex/template-csharp/latest?sort=semver" />
-  </a>
-  &nbsp;
-  <a href="https://github.com/pleonex/template-csharp/workflows/Build%20and%20release">
-    <img alt="Build and release" src="https://github.com/pleonex/template-csharp/workflows/Build%20and%20release/badge.svg?branch=main&event=push" />
+  <a href="https://github.com/pleonex/OpenWFCsharp/workflows/Build%20and%20release">
+    <img alt="Build and release" src="https://github.com/pleonex/OpenWFCsharp/workflows/Build%20and%20release/badge.svg?branch=main&event=push" />
   </a>
   &nbsp;
   <a href="https://choosealicense.com/licenses/mit/">
@@ -20,30 +12,12 @@
   &nbsp;
 </p>
 
-Repository template for .NET projects with a complete DevOps workflow. It uses
-the build system and best-practices from
-[PleOps.Cake](https://www.pleonex.dev/PleOps.Cake/).
+Open-source alternative to the NDS DWC servers.
 
-- ♻️ DevOps best practices for a software project
-- 🔧 Build, test and release .NET projects
-- 📚 Documentation
-- 🤖 Continuous integration
-
-## Tech stack
-
-- **Projects**: C# / .NET
-- **Documentation**: DocFX, GitHub page
-- **CI**: GitHub Actions
-- **Release deployment**: NuGet feeds, GitHub
-
-## Get started
-
-Follow the
-[setup guide started guide from PleOps.Cake](https://www.pleonex.dev/PleOps.Cake/docs/getting-started/setup-template.html)
-to adapt this template to your project.
-
-Feel free to ask any question in the
-[PleOps.Cake project discussion](https://github.com/pleonex/PleOps.Cake/discussions).
+> [!IMPORTANT]  
+> At this moment this project only aims to reproduce the download content server
+> (DLS1). I don't have time to design, support or maintain the online player
+> servers. Feel free to fork if you would like to take this project as a base.
 
 ## Build
 
@@ -63,3 +37,9 @@ dotnet run --project build/orchestrator -- --target=Bundle
 
 Create a new GitHub release with a tag `v{Version}` (e.g. `v2.4`) and that's it!
 This triggers a pipeline that builds and deploy the project.
+
+## License
+
+Under the MIT license.
+
+[Icon by Daniel ceha](https://www.freepik.com/icon/hot-tea_8122151#fromView=search&term=sake+cup&page=8&position=13&track=ais&uuid=4216053d-58f6-447c-ade8-1332310378ba").

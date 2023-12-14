@@ -5,17 +5,6 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run MyConsole",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "Build",
-            "program": "${workspaceFolder}/src/MyConsole/bin/Debug/net8.0/MyConsole.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "console": "internalConsole"
-        },
-        {
             "name": ".NET Attach",
             "type": "coreclr",
             "request": "attach",

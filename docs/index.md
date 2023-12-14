@@ -1,17 +1,8 @@
-# .NET project template
+# OpenWFCsharp
 
-Repository template for .NET projects with a complete DevOps workflow. It uses
-the build system and best-practices from
-[PleOps.Cake](https://www.pleonex.dev/PleOps.Cake/).
+Open-source alternative to the NDS DWC servers.
 
-- ♻️ DevOps best practices for a software project
-- 🔧 Build, test and release .NET projects
-- 📚 Documentation
-- 🤖 Continuous integration
-
-## Tech stack
-
-- **Projects**: C# / .NET
-- **Documentation**: DocFX, GitHub page
-- **CI**: GitHub Actions
-- **Release deployment**: NuGet feeds, GitHub
+> [!IMPORTANT]  
+> At this moment this project only aims to reproduce the download content server
+> (DLS1). I don't have time to design, support or maintain the online player
+> servers. Feel free to fork if you would like to take this project as a base.
