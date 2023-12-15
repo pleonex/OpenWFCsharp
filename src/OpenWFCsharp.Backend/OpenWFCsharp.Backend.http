@@ -1,13 +1,12 @@
 @OpenWFCsharp.Backend_Host = localhost:5120
 @OpenWFCsharp.Backend_HostAddress = http://localhost:5120
 
-# Connection test
-GET {{OpenWFCsharp.Backend_HostAddress}}/ HTTP/1.0
+### Connection test
+GET {{OpenWFCsharp.Backend_HostAddress}}/
 Host: {{OpenWFCsharp.Backend_Host}}
 Connection: Close
 
-###
-
+### NAS - login
 POST {{OpenWFCsharp.Backend_HostAddress}}/ac
 Content-type: application/x-www-form-urlencoded
 Host: {{OpenWFCsharp.Backend_Host}}
@@ -16,5 +15,15 @@ HTTP_X_GAMECD: B2KJ
 Connection: close
 
 action=bG9naW4*&gsbrcd=&sdkver=MDA1MDAz&userid=Nzg4MTk4NjAyOTYzMQ**&passwd=Mjk3&bssid=MDBmMDFhMmIzYzRk&apinfo=MDI6MDAwMDAwMC0wMA**&gamecd=QjJLSg**&makercd=SEY*&unitcd=MA**&macadr=MDAxNjU2ODMzMWY5&lang=MDU*&birth=MDcwYw**&devtime=MTQwNDI5MTMxMDA1&devname=cABsAGUAbwBuAGUAeAA*
+
+### NAS - SVCLOG
+POST {{OpenWFCsharp.Backend_HostAddress}}/ac
+Content-type: application/x-www-form-urlencoded
+Host: {{OpenWFCsharp.Backend_Host}}
+User-Agent: Nitro WiFi SDK/5.3
+HTTP_X_GAMECD: B2KJ
+Connection: close
+
+sdkver=MDA1MDAz&userid=Nzg4MTk4NjAyOTYzMQ**&passwd=Mjk3&bssid=MDBmMDFhMmIzYzRk&apinfo=MDI6MDAwMDAwMC0wMA**&gamecd=QjJLSg**&makercd=SEY*&unitcd=MA**&macadr=MDAxNjU2ODMzMWY5&lang=MDU*&birth=MDcwYw**&devtime=MTQwNDI5MTMxMDA4&devname=cABsAGUAbwBuAGUAeAA*&action=U1ZDTE9D&svc=OTAwMA**
 
 ###

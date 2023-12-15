@@ -27,6 +27,6 @@ public static class TokenService
         Span<byte> tokenData = stackalloc byte[64];
         Random.Shared.NextBytes(tokenData);
 
-        return "NDS" + Convert.ToBase64String(tokenData);
+        return Convert.ToBase64String(tokenData);
     }
 }
