@@ -16,4 +16,8 @@
     <PackageReference Include="coverlet.collector" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OpenWFCsharp.Backend\OpenWFCsharp.Backend.csproj" />
+  </ItemGroup>
+
 </Project>
