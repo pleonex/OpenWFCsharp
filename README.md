@@ -1,4 +1,4 @@
-# ![logo](docs/images/logo_32.png) OpenWFCsharp
+# ![logo](docs/images/logo_32.png) OpenWFC\#
 
 <!-- markdownlint-disable MD033 -->
 <p align="center">

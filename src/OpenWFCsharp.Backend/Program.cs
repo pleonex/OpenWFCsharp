@@ -1,11 +1,16 @@
 ﻿using Microsoft.OpenApi.Models;
+using OpenWFCsharp.Backend.Controllers;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(opts => {
+    opts.OutputFormatters.Insert(0, new DwcOutputFormatter());
+});
+
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(opts => {
 #pragma warning disable S1075 // URIs should not be hardcoded
     opts.SwaggerDoc("v1", new OpenApiInfo {

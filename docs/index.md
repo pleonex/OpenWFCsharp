@@ -1,4 +1,4 @@
-# OpenWFCsharp ![[MIT license](https://choosealicense.com/licenses/mit)](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)
+# OpenWFC\# ![[MIT license](https://choosealicense.com/licenses/mit)](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)
 
 **Open-source** alternative to the NDS DWC / WFC servers with .NET (C#)
 technologies.
