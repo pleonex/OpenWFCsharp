@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers(opts => {
     opts.OutputFormatters.Insert(0, new DwcOutputFormatter());
+    opts.InputFormatters.Insert(0, new DwcInputFormatter());
 });
 
 builder.Services.AddEndpointsApiExplorer();

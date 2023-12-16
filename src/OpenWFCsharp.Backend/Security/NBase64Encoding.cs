@@ -14,8 +14,12 @@ public static class NBase64Encoding
     /// </summary>
     /// <param name="encoded">The encoded text.</param>
     /// <returns>Decoded text.</returns>
-    public static string Decode(string encoded)
+    public static string? Decode(string? encoded)
     {
+        if (string.IsNullOrEmpty(encoded)) {
+            return encoded;
+        }
+
         string standardBase64 = new StringBuilder(encoded)
             .Replace('*', '=')
             .Replace('.', '+')

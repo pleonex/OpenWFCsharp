@@ -34,28 +34,27 @@ public class NAuthenticationServerController : ControllerBase
     /// <response code="400">Request missing 'action' parameter or 'host' header.</response>
     /// <response code="404">Unknown action request value or unknown service location.</response>
     [HttpPost]
-    [Consumes("application/x-www-form-urlencoded")]
-    [Produces("text/plain")]
+    [Consumes(MediaTypeNames.Application.FormUrlEncoded)]
+    [Produces(MediaTypeNames.Text.Plain)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public ActionResult<NasResponse> PostNasRequest([FromForm] Dictionary<string, string> data)
+    public ActionResult<NasResponse> PostNasRequest([FromBody] NasRequest data)
     {
-        data = Decode(data);
         logger.LogDebug("Request parameters: {data}", data);
 
         Response.Headers.Append("NODE", "node1");
         Response.Headers.Append("Date", DateTime.UtcNow.ToString("r"));
         Response.Headers.Append("Server", "OpenWFCsharp (http)");
 
-        if (!data.TryGetValue("action", out string? action)) {
+        if (string.IsNullOrEmpty(data.Action)) {
             return BadRequest("Missing action");
         }
 
-        return action switch {
+        return data.Action switch {
             "login" => ProcessLogin(),
             "SVCLOC" => ProcessSvcLoc(data),
-            _ => NotFound($"Unknown action: '{action}'"),
+            _ => NotFound($"Unknown action: '{data.Action}'"),
         };
     }
 
@@ -76,16 +75,16 @@ public class NAuthenticationServerController : ControllerBase
         return Ok(response);
     }
 
-    private ActionResult<NasResponse> ProcessSvcLoc(Dictionary<string, string> request)
+    private ActionResult<NasResponse> ProcessSvcLoc(NasRequest request)
     {
         // TODO: verify user was registered in DB via login
-        if (!request.TryGetValue("svc", out string? svc)) {
+        if (string.IsNullOrEmpty(request.SvcLoc.Service)) {
             return BadRequest("Missing service");
         }
 
         // TODO: support other services
-        if (svc != "9000") {
-            return NotFound($"Cannot find service: {svc}");
+        if (request.SvcLoc.Service != "9000") {
+            return NotFound($"Cannot find service: {request.SvcLoc.Service}");
         }
 
         // TODO: support micro-service arch by reading other services from config-file.
@@ -107,12 +106,5 @@ public class NAuthenticationServerController : ControllerBase
 
         logger.LogDebug("Response parameters: {data}", response);
         return Ok(response);
-    }
-
-    private static Dictionary<string, string> Decode(IReadOnlyDictionary<string, string> encoded)
-    {
-        return encoded.ToDictionary(
-            i => i.Key,
-            i => NBase64Encoding.Decode(i.Value));
     }
 }

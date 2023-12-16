@@ -1,7 +1,7 @@
 ﻿namespace OpenWFCsharp.Backend.Controllers.Dls;
 
+using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
-using OpenWFCsharp.Backend.Security;
 
 /// <summary>
 /// Endpoint that provides game download content ('dls1' server).
@@ -31,13 +31,12 @@ public class DownloadServerController : ControllerBase
     /// <response code="400">Request missing 'action' parameter or missing 'host' header.</response>
     /// <response code="404">Unknown action request value.</response>
     [HttpPost]
-    [Consumes("application/x-www-form-urlencoded")]
+    [Consumes(MediaTypeNames.Application.FormUrlEncoded)]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public IActionResult PostDlsRequest([FromForm] Dictionary<string, string> data)
+    public IActionResult PostDlsRequest([FromBody] DlsRequest data)
     {
-        data = Decode(data);
         logger.LogDebug("Request parameters: {data}", data);
 
         string? serviceHost = Request.Headers.Host;
@@ -51,37 +50,30 @@ public class DownloadServerController : ControllerBase
 
         // TODO: validate token for the user.
         // TODO: validate game and password
-        if (!data.TryGetValue("action", out string? action)) {
+        if (string.IsNullOrEmpty(data.Action)) {
             return BadRequest("Missing action parameter");
         }
 
-        return action switch {
+        return data.Action switch {
             "count" => ProcessCount(),
             "list" => ProcessList(),
             "contents" => ProcessContents(),
-            _ => NotFound($"Unknown action: '{action}'"),
+            _ => NotFound($"Unknown action: '{data.Action}'"),
         };
     }
 
     private IActionResult ProcessCount()
     {
-        return Ok("0");
+        return Content("0");
     }
 
     private IActionResult ProcessList()
     {
-        return Ok();
+        return Content("");
     }
 
     private IActionResult ProcessContents()
     {
-        return Ok();
-    }
-
-    private static Dictionary<string, string> Decode(IReadOnlyDictionary<string, string> encoded)
-    {
-        return encoded.ToDictionary(
-            i => i.Key,
-            i => NBase64Encoding.Decode(i.Value));
+        return Content("");
     }
 }

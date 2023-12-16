@@ -1,9 +1,5 @@
 ﻿namespace OpenWFCsharp.Backend.Controllers;
 
-using OpenWFCsharp.Backend.Security;
-
-using System.Text;
-
 /// <summary>
 /// Abstract type for responses from DWC servers.
 /// </summary>
