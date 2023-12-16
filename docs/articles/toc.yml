@@ -5,3 +5,9 @@
   href: ./getting-started/tutorial.md
 - name: 🚧 Framework architecture
   href: ./getting-started/architecture.md
+
+- name: 📃 API docs
+- name: REST API
+  href: ../rest/v1.swagger.json
+# - name: .NET models
+#   href: ../api/toc.yml

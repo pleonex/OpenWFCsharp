@@ -1,24 +1,23 @@
 {
   "metadata": [
-    {
-      "src": [
-        {
-          "files": [
-            "OpenWFCsharp.Backend/*.csproj"
-          ],
-          "src": "../src"
-        }
-      ],
-      "dest": "api",
-      "includePrivateMembers": false,
-      "disableGitFeatures": false,
-      "disableDefaultFilter": false,
-      "noRestore": false,
-      "namespaceLayout": "flattened",
-      "memberLayout": "samePage",
-      "EnumSortOrder": "alphabetic",
-      "allowCompilationErrors": false
-    }
+    // {
+    //   "src": [
+    //     {
+    //       "files": [
+    //       ],
+    //       "src": "../src"
+    //     }
+    //   ],
+    //   "dest": "api",
+    //   "includePrivateMembers": false,
+    //   "disableGitFeatures": false,
+    //   "disableDefaultFilter": false,
+    //   "noRestore": false,
+    //   "namespaceLayout": "flattened",
+    //   "memberLayout": "samePage",
+    //   "EnumSortOrder": "alphabetic",
+    //   "allowCompilationErrors": false
+    // }
   ],
   "build": {
     "content": [
@@ -28,6 +27,7 @@
           "api/index.md"
         ]
       },
+      { "files": "rest/*swagger.json" },
       { "files": "**/*.{md,yml}", "src": "articles", "dest": "docs" },
       { "files": [ "toc.yml", "*.md" ] }
     ],

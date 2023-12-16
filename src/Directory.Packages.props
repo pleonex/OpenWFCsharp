@@ -1,13 +1,12 @@
 <Project>
-    <!-- Centralize dependency management -->
-    <ItemGroup>
-      <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-      
-        <PackageVersion Include="nunit" Version="3.13.3" />
-        <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
-        <PackageVersion Include="NUnit.Analyzers" Version="3.8.0" />
-        <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.7.2"/>
-        <PackageVersion Include="coverlet.collector" Version="6.0.0" />
-        <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.12.0.78982" />
-    </ItemGroup>
+  <!-- Centralize dependency management -->
+  <ItemGroup>
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageVersion Include="nunit" Version="4.0.1" />
+    <PackageVersion Include="NUnit3TestAdapter" Version="4.5.0" />
+    <PackageVersion Include="NUnit.Analyzers" Version="3.10.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.0" />
+    <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.15.0.81779" />
+  </ItemGroup>
 </Project>
