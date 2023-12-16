@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using OpenWFCsharp.Backend.Security;
 
 /// <summary>
-/// Endpoint with simple logic from the 'nas' server.
+/// Endpoint that authenticates and authorizes users into the service ('nas' server).
 /// </summary>
 [Route("ac")]
 [ApiController]
@@ -25,24 +25,31 @@ public class NAuthenticationServerController : ControllerBase
     }
 
     /// <summary>
-    /// Post a request to the NAS server.
+    /// Sends an action request to the auth service..
     /// </summary>
     /// <param name="data">URL-NBase64 encoded data with the request.</param>
     /// <returns>Operation result.</returns>
+    /// <remarks>Supported actions are: login, SVCLOC.</remarks>
+    /// <response code="200">Request was accepted and processed.</response>
+    /// <response code="400">Request missing 'action' parameter or missing host header.</response>
+    /// <response code="404">Unknown action request value or unknown service location.</response>
     [HttpPost]
     [Consumes("application/x-www-form-urlencoded")]
-    public IActionResult PostRequest([FromForm] Dictionary<string, string> data)
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public IActionResult PostNasRequest([FromForm] Dictionary<string, string> data)
     {
         data = Base64UrlEncodedContent.Decode(data);
         logger.LogDebug("Request parameters: {data}", data);
 
-        if (!data.TryGetValue("action", out string? action)) {
-            return BadRequest("Missing action parameter");
-        }
-
         Response.Headers.Append("NODE", "node1");
         Response.Headers.Append("Date", DateTime.UtcNow.ToString("r"));
         Response.Headers.Append("Server", "OpenWFCsharp (http)");
+
+        if (!data.TryGetValue("action", out string? action)) {
+            return BadRequest("Missing action parameter");
+        }
 
         return action switch {
             "login" => ProcessLogin(),

@@ -6,7 +6,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 
 /// <summary>
-/// Test connection controller.
+/// Endpoint that allows to test service availability.
 /// </summary>
 [Route("")]
 [ApiController]
@@ -16,10 +16,12 @@ public class TestConnectionController : ControllerBase
     private static readonly string HtmlTestPage = GetTestPage();
 
     /// <summary>
-    /// HTTP GET to check Internet connection.
+    /// Ping to check service availability and Internet connection.
     /// </summary>
     /// <returns>200 OK.</returns>
+    /// <response code="200">Server available, returns test HTML page.</response>
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public IActionResult Ping()
     {
         Response.Headers.Append("X-Organization", "PleOps");
@@ -29,7 +31,7 @@ public class TestConnectionController : ControllerBase
 
     private static string GetTestPage()
     {
-        // This was from the original test page in 2023
+        // This was adapted from the original test page in 2023
         return @"
 <!DOCTYPE html PUBLIC ""-//W3C//DTD XHTML 1.0 Transitional//EN"" ""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"">
 <html>
