@@ -1,9 +1,13 @@
-# OpenWFCsharp
+# ![logo](docs/images/logo_32.png) OpenWFCsharp
 
 <!-- markdownlint-disable MD033 -->
 <p align="center">
-  <a href="https://github.com/pleonex/OpenWFCsharp/workflows/Build%20and%20release">
-    <img alt="Build and release" src="https://github.com/pleonex/OpenWFCsharp/workflows/Build%20and%20release/badge.svg?branch=main&event=push" />
+  <a href="https://github.com/pleonex/OpenWFCsharp/releases">
+    <img alt="GitHub release" src="https://img.shields.io/github/v/release/pleonex/OpenWFCsharp">
+  </a>
+  &nbsp;
+  <a href="https://github.com/pleonex/OpenWFCsharp/actions/workflows/build-and-release.yml">
+    <img alt="Build and release" src="https://github.com/pleonex/OpenWFCsharp/actions/workflows/build-and-release.yml/badge.svg?branch=main" />
   </a>
   &nbsp;
   <a href="https://choosealicense.com/licenses/mit/">
@@ -12,12 +16,33 @@
   &nbsp;
 </p>
 
-Open-source alternative to the NDS DWC servers.
+**Open-source** alternative to the NDS DWC / WFC servers with .NET (C#)
+technologies.
+
+## Server status implementation
+
+- 🌍 **Connectivity test** (`conntest`): ✅ Implemented
+- 👤 **Authorization** (`nas`): 🌱 Basic implementation
+  - Supported actions: `login`, `SVCLOC`
+  - It doesn't perform any user auth or registration.
+- 🔽 **Download** (`dls1`): 🚧 Work-in-progress
 
 > [!IMPORTANT]  
-> At this moment this project only aims to reproduce the download content server
-> (DLS1). I don't have time to design, support or maintain the online player
-> servers. Feel free to fork if you would like to take this project as a base.
+> This project only aims to provide DLCs / download content to DS games. It will
+> implement only the required servers (nas and dls1). I don't have time at this
+> moment to design, support, review or maintain features for online multiplayer
+> gamespy servers. Feel free to fork if you would like to take this project as a
+> base.
+
+## Get started
+
+Self-hosting instructions will be available in the
+[project website](https://www.pleonex.dev/OpenWFCsharp).
+
+Feel free to ask any question in the project
+[Discussion site!](https://github.com/pleonex/OpenWFCsharp/discussions)
+
+**I don't provide any public server to connect.**
 
 ## Build
 
