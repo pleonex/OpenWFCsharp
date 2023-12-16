@@ -72,7 +72,7 @@ public class NAuthenticationServerController : ControllerBase
         };
 
         logger.LogDebug("Response parameters: {data}", response);
-        return Ok(response);
+        return response;
     }
 
     private ActionResult<NasResponse> ProcessSvcLoc(NasRequest request)
@@ -105,6 +105,6 @@ public class NAuthenticationServerController : ControllerBase
         };
 
         logger.LogDebug("Response parameters: {data}", response);
-        return Ok(response);
+        return response;
     }
 }
