@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Net.Http.Headers;
-using OpenWFCsharp.Backend.Controllers.Nas;
+using OpenWFCsharp.Backend.Security;
 
 /// <summary>
 /// Formatter for data sent from DWC servers to clients.
@@ -30,7 +30,7 @@ public class DwcOutputFormatter : TextOutputFormatter
     /// <inheritdoc />
     public override bool CanWriteResult(OutputFormatterCanWriteContext context)
     {
-        return typeof(NasResponse).IsAssignableFrom(context.ObjectType);
+        return typeof(DwcResponse).IsAssignableFrom(context.ObjectType);
     }
 
     /// <inheritdoc />
@@ -38,9 +38,25 @@ public class DwcOutputFormatter : TextOutputFormatter
         OutputFormatterWriteContext context,
         Encoding selectedEncoding)
     {
-        if (context.Object is NasResponse nasResponse) {
-            string data = nasResponse.Encode();
+        if (context.Object is DwcResponse dwcResponse) {
+            string data = EncodeAsString(dwcResponse);
             await context.HttpContext.Response.WriteAsync(data, selectedEncoding);
         }
+    }
+
+    private static string EncodeAsString(DwcResponse response)
+    {
+        var builder = new StringBuilder();
+        foreach (var entry in response.Parameters) {
+            if (builder.Length > 0) {
+                builder.Append('&');
+            }
+
+            builder.Append(entry.Key)
+                .Append('=')
+                .Append(NBase64Encoding.Encode(entry.Value));
+        }
+
+        return builder.ToString();
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace OpenWFCsharp.Backend.Controllers.Dls;
 
 using Microsoft.AspNetCore.Mvc;
+using OpenWFCsharp.Backend.Security;
 
 /// <summary>
 /// Endpoint that provides game download content ('dls1' server).
@@ -36,7 +37,7 @@ public class DownloadServerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult PostDlsRequest([FromForm] Dictionary<string, string> data)
     {
-        data = Base64UrlEncodedContent.Decode(data);
+        data = Decode(data);
         logger.LogDebug("Request parameters: {data}", data);
 
         string? serviceHost = Request.Headers.Host;
@@ -75,5 +76,12 @@ public class DownloadServerController : ControllerBase
     private IActionResult ProcessContents()
     {
         return Ok();
+    }
+
+    private static Dictionary<string, string> Decode(IReadOnlyDictionary<string, string> encoded)
+    {
+        return encoded.ToDictionary(
+            i => i.Key,
+            i => NBase64Encoding.Decode(i.Value));
     }
 }
