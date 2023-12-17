@@ -16,7 +16,7 @@ public sealed class BuildLifetime : FrostingLifetime<BuildContext>
     {
         // TODO: disable quality checks while prototyping.
         context.WarningsAsErrors = true;
-        context.DotNetContext.CoverageTarget = 15;
+        context.DotNetContext.CoverageTarget = 50;
 
         // Update build parameters from command line arguments.
         context.ReadArguments();

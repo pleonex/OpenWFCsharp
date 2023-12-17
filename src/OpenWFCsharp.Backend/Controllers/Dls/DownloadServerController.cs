@@ -1,8 +1,11 @@
 ﻿namespace OpenWFCsharp.Backend.Controllers.Dls;
 
+using System.ComponentModel.DataAnnotations;
 using System.Net.Mime;
+using System.Text;
 using Microsoft.AspNetCore.Mvc;
 using OpenWFCsharp.Backend.Controllers.Dls.Storage;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 /// <summary>
 /// Endpoint that provides game download content ('dls1' server).
@@ -31,11 +34,8 @@ public class DownloadServerController(
     {
         logger.LogDebug("Request parameters: {data}", data);
 
-        string? serviceHost = Request.Headers.Host;
-        if (serviceHost is null) {
-            return BadRequest("Cannot determine myself. Please provide the 'host' header");
-        }
-
+        string serviceHost = Request.Headers.Host.ToString();
+        serviceHost = string.IsNullOrEmpty(serviceHost) ? "localhost" : serviceHost;
         Response.Headers.Append("X-DLS-Host", serviceHost);
         Response.Headers.Append("Date", DateTime.UtcNow.ToString("r"));
         Response.Headers.Append("Server", "OpenWFCsharp");
@@ -47,27 +47,75 @@ public class DownloadServerController(
         }
 
         return data.Action switch {
-            "count" => ProcessCount(),
-            "list" => ProcessList(),
-            "contents" => ProcessContents(),
+            "count" => ProcessCount(data),
+            "list" => ProcessList(data),
+            "contents" => ProcessContents(data),
             _ => NotFound($"Unknown action: '{data.Action}'"),
         };
     }
 
-    private IActionResult ProcessCount()
+    private IActionResult ProcessCount(DlsRequest data)
     {
-        int count = storage.CountFiles("VPYP", Array.Empty<string>());
+        if (string.IsNullOrEmpty(data.GameCode)) {
+            return BadRequest("Missing gamecode");
+        }
+
+        string[] attributes = [
+            data.FileAttribute1 ?? string.Empty,
+            data.FileAttribute2 ?? string.Empty,
+            data.FileAttribute3 ?? string.Empty,
+        ];
+
+        int count = storage.CountFiles(data.GameCode, attributes);
         return Content(count.ToString());
     }
 
-    private IActionResult ProcessList()
+    private IActionResult ProcessList(DlsRequest data)
     {
-        var list = storage.GetList("VPYP", Array.Empty<string>());
-        return Content(string.Join(",", list.Select(l => l.Name)));
+        if (string.IsNullOrEmpty(data.GameCode)) {
+            return BadRequest("Missing gamecode");
+        }
+
+        string[] requestAttributes = [
+            data.FileAttribute1 ?? string.Empty,
+            data.FileAttribute2 ?? string.Empty,
+            data.FileAttribute3 ?? string.Empty,
+        ];
+
+        IEnumerable<GameFileInfo> files = storage.GetList(data.GameCode, requestAttributes)
+            .Skip(data.List.Offset)
+            .Take(data.List.Number);
+
+        StringBuilder output = new();
+        foreach (GameFileInfo file in files) {
+            string[] fileAttributes = new string[3];
+            if (file.Attributes is not null) {
+                fileAttributes[0] = (file.Attributes.Length > 0) ? (file.Attributes[0] ?? "") : "";
+                fileAttributes[1] = (file.Attributes.Length > 1) ? (file.Attributes[1] ?? "") : "";
+                fileAttributes[2] = (file.Attributes.Length > 2) ? (file.Attributes[2] ?? "") : "";
+            }
+
+            _ = output.Append(file.Name).Append('\t')
+                .Append(fileAttributes[0]).Append('\t')
+                .Append(fileAttributes[1]).Append('\t')
+                .Append(fileAttributes[2]).Append('\t')
+                .Append('\t')
+                .Append(file.FileLength)
+                .Append("\r\n");
+        }
+
+        return Content(output.ToString());
     }
 
-    private IActionResult ProcessContents()
+    private IActionResult ProcessContents(DlsRequest data)
     {
-        return Content("");
+        if (string.IsNullOrEmpty(data.GameCode)) {
+            return BadRequest("Missing gamecode");
+        } else if (string.IsNullOrEmpty(data.Contents.Name)) {
+            return BadRequest("Missing file to download");
+        }
+
+        Stream file = storage.GetFile(data.GameCode, data.Contents.Name);
+        return File(file, "application/x-dsdl", data.Contents.Name);
     }
 }

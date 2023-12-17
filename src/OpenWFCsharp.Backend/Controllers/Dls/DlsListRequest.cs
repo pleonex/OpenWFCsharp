@@ -21,7 +21,7 @@ public record DlsListRequest
     /// Gets or sets the start index of files to return in the list.
     /// </summary>
     public int Offset {
-        get => parameters.ContainsKey("offset") ? int.Parse(parameters["offset"]!) : -1;
+        get => parameters.ContainsKey("offset") ? int.Parse(parameters["offset"]!) : 0;
         set => parameters["offset"] = value.ToString();
     }
 
@@ -29,7 +29,7 @@ public record DlsListRequest
     /// Gets or sets the number of file information to return in the list.
     /// </summary>
     public int Number {
-        get => parameters.ContainsKey("num") ? int.Parse(parameters["num"]!) : -1;
+        get => parameters.ContainsKey("num") ? int.Parse(parameters["num"]!) : 0;
         set => parameters["num"] = value.ToString();
     }
 }
