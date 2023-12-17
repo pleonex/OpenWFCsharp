@@ -78,13 +78,13 @@ public class NAuthenticationServerController : ControllerBase
     private ActionResult<NasResponse> ProcessSvcLoc(NasRequest request)
     {
         // TODO: verify user was registered in DB via login
-        if (string.IsNullOrEmpty(request.SvcLoc.Service)) {
+        if (request.ServiceLocation.Service == -1) {
             return BadRequest("Missing service");
         }
 
         // TODO: support other services
-        if (request.SvcLoc.Service != "9000") {
-            return NotFound($"Cannot find service: {request.SvcLoc.Service}");
+        if (request.ServiceLocation.Service != 9000) {
+            return NotFound($"Cannot find service: {request.ServiceLocation.Service}");
         }
 
         // TODO: support micro-service arch by reading other services from config-file.

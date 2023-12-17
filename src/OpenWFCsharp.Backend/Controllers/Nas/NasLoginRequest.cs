@@ -1,9 +1,9 @@
 ﻿namespace OpenWFCsharp.Backend.Controllers.Nas;
 
 /// <summary>
-/// Request data to the 'nas' server for the 'SVCLOC' action.
+/// Request data to the 'nas' server for the 'login' action.
 /// </summary>
-public record NasSvcLocRequest
+public record NasLoginRequest
 {
     private readonly Dictionary<string, string?> parameters;
 
@@ -11,17 +11,17 @@ public record NasSvcLocRequest
     /// Initializes a new instance of the <see cref="NasSvcLocRequest"/> class.
     /// </summary>
     /// <param name="parameters">Request data.</param>
-    public NasSvcLocRequest(Dictionary<string, string?> parameters)
+    public NasLoginRequest(Dictionary<string, string?> parameters)
     {
         ArgumentNullException.ThrowIfNull(parameters);
         this.parameters = parameters;
     }
 
     /// <summary>
-    /// Gets or sets the requested service code.
+    /// Gets the unknown 'gsbr' code.
     /// </summary>
-    public int Service {
-        get => parameters.ContainsKey("svc") ? int.Parse(parameters["svc"]!) : -1;
-        set => parameters["svc"] = value.ToString();
+    public string? GsbrCode {
+        get => parameters.GetValueOrDefault("gsbrcd");
+        set => parameters["gsbrcd"] = value;
     }
 }

@@ -85,7 +85,7 @@ public class NAuthenticationServerControllerTests
     {
         controller.Request.Headers.Append("Host", "testhost");
         var request = new NasRequest { Action = "SVCLOC" };
-        request.SvcLoc.Service = "9000";
+        request.ServiceLocation.Service = 9000;
 
         var result = controller.PostNasRequest(request);
         var loginRespose = (result.Value as NasSvcLocResponse)!;
@@ -107,7 +107,7 @@ public class NAuthenticationServerControllerTests
     {
         controller.Request.Headers.Append("Host", "testhost");
         var request = new NasRequest { Action = "SVCLOC" };
-        request.SvcLoc.Service = null;
+        request.ServiceLocation.Service = -1;
 
         var result = controller.PostNasRequest(request);
 
@@ -119,7 +119,7 @@ public class NAuthenticationServerControllerTests
     {
         controller.Request.Headers.Append("Host", "testhost");
         var request = new NasRequest { Action = "SVCLOC" };
-        request.SvcLoc.Service = "8000";
+        request.ServiceLocation.Service = 8000;
 
         var result = controller.PostNasRequest(request);
 
