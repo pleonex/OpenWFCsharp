@@ -63,7 +63,7 @@ public class DownloadServerController(
     private IActionResult ProcessList()
     {
         var list = storage.GetList("VPYP", Array.Empty<string>());
-        return Content(string.Join(",", list.Select(l => l.Filename)));
+        return Content(string.Join(",", list.Select(l => l.Name)));
     }
 
     private IActionResult ProcessContents()

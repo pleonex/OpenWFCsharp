@@ -8,7 +8,7 @@ public record NasLoginRequest
     private readonly Dictionary<string, string?> parameters;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="NasSvcLocRequest"/> class.
+    /// Initializes a new instance of the <see cref="NasLoginRequest"/> class.
     /// </summary>
     /// <param name="parameters">Request data.</param>
     public NasLoginRequest(Dictionary<string, string?> parameters)

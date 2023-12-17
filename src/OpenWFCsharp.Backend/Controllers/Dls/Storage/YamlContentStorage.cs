@@ -8,6 +8,14 @@ using System.IO;
 /// </summary>
 public class YamlContentStorage : IContentStorage
 {
+    /// <summary>
+    /// Initializes a new instance of the <see cref="YamlContentStorage"/> class.
+    /// </summary>
+    public YamlContentStorage()
+    {
+        // TODO: populate DB.
+    }
+
     /// <inheritdoc />
     public int CountFiles(string gameCode, string[] attributes)
     {
