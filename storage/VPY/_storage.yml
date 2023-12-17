@@ -1,0 +1,28 @@
+- GameCode: "VPYJ"
+  Password: ""
+  StoragePath: "VPY"
+  Files:
+    - Name: "PSL_SECURE_DLC.csv"
+      PhysicalFilename: "J_PSL_DLC_SECURE.csv"
+
+- GameCode: "VPYP"
+  Password: "XDgPr9aWUjx8G5Vd"
+  StoragePath: "VPY"
+  Files:
+    - Name: "PSL_SECURE_DLC.csv"
+      PhysicalFilename: "P_PSL_DLC_SECURE.csv"
+    - Name: "PSL_SECURE_DLC.csv"
+      PhysicalFilename: "Spanish_DLC1.csv"
+      Attributes:
+        - "ES"
+
+- GameCode: "VPYT"
+  Password: "FmipebADNPgqB2t5"
+  StoragePath: "VPY"
+  Files:
+    - Name: "PSL_SECURE_DLC.csv"
+      PhysicalFilename: "T_PSL_DLC_SECURE.csv"
+    - Name: "PSL_SECURE_DLC.csv"
+      PhysicalFilename: "Spanish_DLC1.csv"
+      Attributes:
+        - "ES"

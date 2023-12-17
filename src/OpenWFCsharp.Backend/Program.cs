@@ -1,10 +1,15 @@
 ﻿using Microsoft.OpenApi.Models;
 using OpenWFCsharp.Backend.Controllers;
+using OpenWFCsharp.Backend.Controllers.Dls.Storage;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// DLS1
+builder.Services.AddSingleton<IContentStorage, YamlContentStorage>();
+
+// NAS
 builder.Services.AddControllers(opts => {
     opts.OutputFormatters.Insert(0, new DwcOutputFormatter());
     opts.InputFormatters.Insert(0, new DwcInputFormatter());

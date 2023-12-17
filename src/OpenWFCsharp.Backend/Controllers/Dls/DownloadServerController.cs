@@ -2,26 +2,18 @@
 
 using System.Net.Mime;
 using Microsoft.AspNetCore.Mvc;
+using OpenWFCsharp.Backend.Controllers.Dls.Storage;
 
 /// <summary>
 /// Endpoint that provides game download content ('dls1' server).
 /// </summary>
 [Route("download")]
 [ApiController]
-public class DownloadServerController : ControllerBase
+public class DownloadServerController(
+    ILogger<DownloadServerController> logger,
+    IContentStorage storage)
+    : ControllerBase
 {
-    private readonly ILogger<DownloadServerController> logger;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="DownloadServerController"/> class.
-    /// </summary>
-    /// <param name="logger">Logger for the instance.</param>
-    public DownloadServerController(ILogger<DownloadServerController> logger)
-    {
-        ArgumentNullException.ThrowIfNull(logger);
-        this.logger = logger;
-    }
-
     /// <summary>
     /// Sends an action requeseet to the download service.
     /// </summary>
@@ -64,12 +56,14 @@ public class DownloadServerController : ControllerBase
 
     private IActionResult ProcessCount()
     {
-        return Content("0");
+        int count = storage.CountFiles("VPYP", Array.Empty<string>());
+        return Content(count.ToString());
     }
 
     private IActionResult ProcessList()
     {
-        return Content("");
+        var list = storage.GetList("VPYP", Array.Empty<string>());
+        return Content(string.Join(",", list.Select(l => l.Filename)));
     }
 
     private IActionResult ProcessContents()
