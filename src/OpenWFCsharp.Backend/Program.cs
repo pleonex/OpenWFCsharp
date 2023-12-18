@@ -1,5 +1,6 @@
 ﻿using Microsoft.OpenApi.Models;
 using OpenWFCsharp.Backend.Controllers;
+using OpenWFCsharp.Backend.Controllers.Dls;
 using OpenWFCsharp.Backend.Controllers.Dls.Storage;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
@@ -8,6 +9,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // DLS1
 builder.Services.AddSingleton<IContentStorage, YamlContentStorage>();
+builder.Services.Configure<DownloadServerOptions>(
+    builder.Configuration.GetSection(DownloadServerOptions.OptionName));
 
 // NAS
 builder.Services.AddControllers(opts => {
