@@ -2,41 +2,161 @@
 
 using System.Collections.Generic;
 using System.IO;
+using Microsoft.Extensions.Options;
+using YamlDotNet.Serialization;
 
 /// <summary>
 /// Content storage based on folders on disk and YAML information.
 /// </summary>
 public class YamlContentStorage : IContentStorage
 {
+    private readonly ILogger<YamlContentStorage> logger;
+    private readonly List<GameSupportInfo> games;
+    private readonly DownloadServerOptions serverOptions;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="YamlContentStorage"/> class.
     /// </summary>
-    public YamlContentStorage()
+    public YamlContentStorage(
+        ILogger<YamlContentStorage> logger,
+        IOptions<DownloadServerOptions> serverOptions)
     {
-        // TODO: populate DB.
-    }
+        this.logger = logger;
+        this.serverOptions = serverOptions.Value;
 
-    /// <inheritdoc />
-    public int CountFiles(string gameCode, string[] attributes)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <inheritdoc />
-    public Stream GetFile(string gameCode, string filename)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <inheritdoc />
-    public IEnumerable<GameFileInfo> GetList(string gameCode, string[] attributes)
-    {
-        throw new NotImplementedException();
+        games = [];
+        PopulateDb();
     }
 
     /// <inheritdoc />
     public bool ValidateGameInfo(string gameCode, string password)
     {
-        throw new NotImplementedException();
+        if (!serverOptions.ValidatePasswords) {
+            return true;
+        }
+
+        GameSupportInfo? info = games.Find(i => i.GameCode == gameCode);
+        return info is not null && info.Password == password;
+    }
+
+    /// <inheritdoc />
+    public int CountFiles(string gameCode, string[] attributes)
+    {
+        GameSupportInfo? info = games.Find(i => i.GameCode == gameCode);
+        if (info is null) {
+            return 0;
+        }
+
+        return info.Files.Count(i => FileAttributeFilter(i, attributes));
+    }
+
+    /// <inheritdoc />
+    public IEnumerable<GameFileInfo> GetList(string gameCode, string[] attributes)
+    {
+        GameSupportInfo? info = games.Find(i => i.GameCode == gameCode);
+        if (info is null) {
+            return Array.Empty<GameFileInfo>();
+        }
+
+        return info.Files.Where(i => FileAttributeFilter(i, attributes));
+    }
+
+    /// <inheritdoc />
+    public Stream GetFile(string gameCode, string filename)
+    {
+        GameSupportInfo info = games.Find(i => i.GameCode == gameCode)
+            ?? throw new FileNotFoundException("Missing game code");
+
+        GameFileInfo fileInfo = info.Files.FirstOrDefault(i => i.Name == filename)
+            ?? throw new FileNotFoundException("Missing requested file");
+
+        string filePath = GetFilePath(info, fileInfo);
+        return new FileStream(filePath, FileMode.Open, FileAccess.Read);
+    }
+
+    private static string GetFilePath(GameSupportInfo gameInfo, GameFileInfo fileInfo)
+    {
+        string name = string.IsNullOrEmpty(fileInfo.PhysicalFilename)
+            ? fileInfo.Name
+            : fileInfo.PhysicalFilename;
+        string filePath = Path.Combine(gameInfo.StoragePath, name);
+        if (!File.Exists(filePath)) {
+            throw new FileNotFoundException("Missing downloadable file", filePath);
+        }
+
+        return filePath;
+    }
+
+    private static bool FileAttributeFilter(GameFileInfo info, string[]? requestAttributes)
+    {
+        if (requestAttributes is null || info.Attributes is null) {
+            return true;
+        }
+
+        bool result = true;
+        if (info.Attributes.Length > 0 && requestAttributes.Length > 0) {
+            result &= info.Attributes[0] == requestAttributes[0];
+        }
+
+        if (info.Attributes.Length > 1 && requestAttributes.Length > 1) {
+            result &= info.Attributes[1] == requestAttributes[1];
+        }
+
+        if (info.Attributes.Length > 2 && requestAttributes.Length > 2) {
+            result &= info.Attributes[2] == requestAttributes[2];
+        }
+
+        return result;
+    }
+
+    private void PopulateDb()
+    {
+        IEnumerable<string> files;
+        try {
+            string content = File.ReadAllText(serverOptions.StorageDB);
+            files = new DeserializerBuilder()
+                .Build()
+                .Deserialize<IEnumerable<string>>(content);
+        } catch (Exception ex) {
+            logger.LogCritical(ex, "Cannot read storage database");
+            throw;
+        }
+
+        string dbDirectory = Path.GetDirectoryName(serverOptions.StorageDB)!;
+        foreach (string relativePath in files) {
+            string yamlFile = Path.Combine(dbDirectory, relativePath);
+            ReadGameInfo(yamlFile);
+        }
+    }
+
+    private void ReadGameInfo(string gameInfoPath)
+    {
+        IEnumerable<GameSupportInfo> definitions;
+        try {
+            string content = File.ReadAllText(gameInfoPath);
+            definitions = new DeserializerBuilder()
+                .Build()
+                .Deserialize<IEnumerable<GameSupportInfo>>(content);
+
+            games.AddRange(definitions);
+        } catch (Exception ex) {
+            logger.LogCritical(ex, "Cannot read storage game definition: {file}", gameInfoPath);
+            throw;
+        }
+
+        string dbDirectory = Path.GetDirectoryName(serverOptions.StorageDB)!;
+        foreach (GameSupportInfo gameInfo in definitions) {
+            gameInfo.StoragePath = Path.Combine(dbDirectory, gameInfo.StoragePath);
+
+            foreach (GameFileInfo fileInfo in gameInfo.Files) {
+                try {
+                    string filePath = GetFilePath(gameInfo, fileInfo);
+                    using Stream temp = File.OpenRead(filePath);
+                    fileInfo.FileLength = temp.Length;
+                } catch (FileNotFoundException ex) {
+                    logger.LogCritical(ex, "Missing downloadable file {file}", fileInfo);
+                }
+            }
+        }
     }
 }
