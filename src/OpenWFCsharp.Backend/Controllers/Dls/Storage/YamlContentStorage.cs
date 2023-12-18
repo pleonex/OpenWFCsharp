@@ -89,21 +89,21 @@ public class YamlContentStorage : IContentStorage
 
     private static bool FileAttributeFilter(GameFileInfo info, string[]? requestAttributes)
     {
-        if (requestAttributes is null || info.Attributes is null) {
+        if (requestAttributes is null) {
             return true;
         }
 
         bool result = true;
-        if (info.Attributes.Length > 0 && requestAttributes.Length > 0) {
-            result &= info.Attributes[0] == requestAttributes[0];
+        if (requestAttributes.Length > 0) {
+            result &= (info.Attributes is { Length: > 0 }) && (info.Attributes[0] == requestAttributes[0]);
         }
 
-        if (info.Attributes.Length > 1 && requestAttributes.Length > 1) {
-            result &= info.Attributes[1] == requestAttributes[1];
+        if (requestAttributes.Length > 1 && !string.IsNullOrEmpty(requestAttributes[1])) {
+            result &= (info.Attributes is { Length: > 1 }) && (info.Attributes[1] == requestAttributes[1]);
         }
 
-        if (info.Attributes.Length > 2 && requestAttributes.Length > 2) {
-            result &= info.Attributes[2] == requestAttributes[2];
+        if (requestAttributes.Length > 2 && !string.IsNullOrEmpty(requestAttributes[2])) {
+            result &= (info.Attributes is { Length: > 2 }) && (info.Attributes[2] == requestAttributes[2]);
         }
 
         return result;
@@ -155,6 +155,7 @@ public class YamlContentStorage : IContentStorage
                     fileInfo.FileLength = temp.Length;
                 } catch (FileNotFoundException ex) {
                     logger.LogCritical(ex, "Missing downloadable file {file}", fileInfo);
+                    throw;
                 }
             }
         }

@@ -11,8 +11,8 @@
   Files:
     - Name: "PSL_SECURE_DLC.csv"
       PhysicalFilename: "P_PSL_DLC_SECURE.csv"
-    - Name: "PSL_SECURE_DLC.csv"
-      PhysicalFilename: "Spanish_DLC1.csv"
+    - Name: "Spanish_DLC1.bin"
+      PhysicalFilename: "Spanish_DLC1.bin"
       Attributes:
         - "ES"
 
@@ -22,7 +22,7 @@
   Files:
     - Name: "PSL_SECURE_DLC.csv"
       PhysicalFilename: "T_PSL_DLC_SECURE.csv"
-    - Name: "PSL_SECURE_DLC.csv"
-      PhysicalFilename: "Spanish_DLC1.csv"
+    - Name: "Spanish_DLC1.bin"
+      PhysicalFilename: "Spanish_DLC1.bin"
       Attributes:
         - "ES"
