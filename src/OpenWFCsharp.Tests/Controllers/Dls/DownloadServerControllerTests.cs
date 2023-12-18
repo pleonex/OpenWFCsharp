@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using OpenWFCsharp.Backend.Controllers.Dls;
 using OpenWFCsharp.Backend.Controllers.Dls.Storage;
-using OpenWFCsharp.Backend.Controllers.Nas;
 
 [TestFixture]
 public class DownloadServerControllerTests
@@ -52,6 +51,9 @@ public class DownloadServerControllerTests
     [Test]
     public void PostRequestWithUnsupportedActionReturnsNotFound()
     {
+        storage.Setup(x => x.ValidateGameInfo(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(true);
+
         var request = new DlsRequest { Action = "unsupported" };
         var result = controller.PostDlsRequest(request);
 
@@ -61,6 +63,8 @@ public class DownloadServerControllerTests
     [Test]
     public void PostCountRequest()
     {
+        storage.Setup(x => x.ValidateGameInfo(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(true);
         storage.Setup(x => x.CountFiles("VPYS", new[] { "es", "", "fr" }))
             .Returns(10)
             .Verifiable(Times.Once);
@@ -88,12 +92,19 @@ public class DownloadServerControllerTests
         const string expected = "f1\t\t\t\t\t24\r\nf2.txt\tes\tfr\tde\t\t48\r\n";
         GameFileInfo[] outputFiles = [
             null!,
-            new GameFileInfo("f1", null, 24, Array.Empty<string>()),
-            new GameFileInfo("f2.txt", null, 48, ["es", "fr", "de"]),
+            new GameFileInfo { Name = "f1", FileLength = 24 },
+            new GameFileInfo {
+                Name = "f2.txt",
+                PhysicalFilename = "f3",
+                FileLength = 48,
+                Attributes = ["es", "fr", "de"]
+            },
             null!,
             null!,
         ];
 
+        storage.Setup(x => x.ValidateGameInfo(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(true);
         storage.Setup(x => x.GetList("VPYS", new[] { "es", "", "fr" }))
             .Returns(outputFiles)
             .Verifiable(Times.Once);
@@ -123,6 +134,8 @@ public class DownloadServerControllerTests
         byte[] expectedData = [0xCA, 0xFE];
         using Stream expectedStream = new MemoryStream(expectedData);
 
+        storage.Setup(x => x.ValidateGameInfo(It.IsAny<string>(), It.IsAny<string>()))
+            .Returns(true);
         storage.Setup(x => x.GetFile("VPYS", "f2.txt"))
             .Returns(expectedStream)
             .Verifiable(Times.Once);

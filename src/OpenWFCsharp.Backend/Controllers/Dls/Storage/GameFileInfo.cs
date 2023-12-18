@@ -13,15 +13,15 @@ public record GameFileInfo
     /// <summary>
     /// Gets the name of the file on disk. If not set, same as the file name.
     /// </summary>
-    public required string? PhysicalFilename { get; init; }
+    public string? PhysicalFilename { get; init; }
 
     /// <summary>
     /// Gets the length of the file.
     /// </summary>
-    public required long FileLength { get; set; }
+    public long FileLength { get; set; }
 
     /// <summary>
     /// Gets the optional file attributes for filtering.
     /// </summary>
-    public required string[]? Attributes { get; init; }
+    public string[]? Attributes { get; init; }
 }

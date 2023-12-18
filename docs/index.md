@@ -9,7 +9,9 @@ technologies.
 - 👤 **Authorization** (`nas`): 🌱 Basic implementation
   - Supported actions: `login`, `SVCLOC`
   - It doesn't perform any user auth or registration.
-- 🔽 **Download** (`dls1`): 🚧 Work-in-progress
+- 🔽 **Download** (`dls1`): ✅ Implemented
+  - Supported actions: `count`, `list`, `contents`
+  - It doesn't support return of random files (mystery gift)
 
 > [!IMPORTANT]  
 > This project only aims to provide DLCs / download content to DS games. It will

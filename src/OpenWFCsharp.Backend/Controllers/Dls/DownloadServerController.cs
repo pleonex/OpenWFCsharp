@@ -32,6 +32,7 @@ public class DownloadServerController(
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public IActionResult PostDlsRequest([FromBody] DlsRequest data)
     {
+        // TODO: validate token for the user.
         logger.LogDebug("Request parameters: {data}", data);
 
         string serviceHost = Request.Headers.Host.ToString();
@@ -40,8 +41,10 @@ public class DownloadServerController(
         Response.Headers.Append("Date", DateTime.UtcNow.ToString("r"));
         Response.Headers.Append("Server", "OpenWFCsharp");
 
-        // TODO: validate token for the user.
-        // TODO: validate game and password
+        if (!storage.ValidateGameInfo(data.GameCode ?? "", data.Password ?? "")) {
+            return BadRequest("Invalid user and password");
+        }
+
         if (string.IsNullOrEmpty(data.Action)) {
             return BadRequest("Missing action parameter");
         }
