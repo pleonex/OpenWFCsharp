@@ -148,14 +148,15 @@ public class YamlContentStorage : IContentStorage
         foreach (GameSupportInfo gameInfo in definitions) {
             gameInfo.StoragePath = Path.Combine(dbDirectory, gameInfo.StoragePath);
 
-            foreach (GameFileInfo fileInfo in gameInfo.Files) {
+            var allFiles = gameInfo.Files.ToList();
+            foreach (GameFileInfo fileInfo in allFiles) {
                 try {
                     string filePath = GetFilePath(gameInfo, fileInfo);
                     using Stream temp = File.OpenRead(filePath);
                     fileInfo.FileLength = temp.Length;
                 } catch (FileNotFoundException ex) {
-                    logger.LogCritical(ex, "Missing downloadable file {file}", fileInfo);
-                    throw;
+                    logger.LogError("Removing missing downloadable file {path} {info}", ex.FileName, fileInfo);
+                    gameInfo.Files.Remove(fileInfo);
                 }
             }
         }

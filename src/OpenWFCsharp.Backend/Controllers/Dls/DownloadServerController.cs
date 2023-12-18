@@ -115,7 +115,13 @@ public class DownloadServerController(
             return BadRequest("Missing file to download");
         }
 
-        Stream file = storage.GetFile(data.GameCode, data.Contents.Name);
+        Stream file;
+        try {
+            file = storage.GetFile(data.GameCode, data.Contents.Name);
+        } catch {
+            return NotFound("File not found");
+        }
+
         return File(file, "application/x-dsdl", data.Contents.Name);
     }
 }
