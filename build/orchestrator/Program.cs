@@ -29,7 +29,7 @@ public sealed class BuildLifetime : FrostingLifetime<BuildContext>
         context.SwaggerDocName = "v1";
 
         context.DockerWebProject = "src/OpenWFCsharp.Backend";
-        context.DockerImageName = "pleonex/openwfcsharp-full";
+        context.DockerImageName = "pleonex/openwfcsharp-complete";
 
         // Print the build info to use.
         context.Print();
