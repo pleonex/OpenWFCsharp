@@ -28,6 +28,9 @@ public sealed class BuildLifetime : FrostingLifetime<BuildContext>
         context.SwaggerAssemblyPath = $"bin/{context.DotNetContext.Configuration}/net8.0/OpenWFCsharp.Backend.dll";
         context.SwaggerDocName = "v1";
 
+        context.DockerWebProject = "src/OpenWFCsharp.Backend";
+        context.DockerImageName = "pleonex/openwfcsharp-full";
+
         // Print the build info to use.
         context.Print();
     }
@@ -51,6 +54,7 @@ public sealed class DefaultTask : FrostingTask
 [IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.Common.SetGitVersionTask))]
 [IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.GitHub.ExportReleaseNotesTask))]
 [IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.Dotnet.DotnetTasks.BundleProjectTask))]
+[IsDependentOn(typeof(BuildDockerImageTask))]
 [IsDependentOn(typeof(ExportSwaggerFileTask))]
 [IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.DocFx.BuildTask))]
 public sealed class BundleTask : FrostingTask
