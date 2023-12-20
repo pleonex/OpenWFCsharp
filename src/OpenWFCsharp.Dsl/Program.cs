@@ -1,10 +1,15 @@
 ﻿using Microsoft.OpenApi.Models;
 using OpenWFCsharp.Dls;
 using OpenWFCsharp.Dls.Storage;
+using OpenWFCsharp.Messages.Formatters;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddControllers(opts => {
+    opts.InputFormatters.Insert(0, new DwcInputFormatter());
+});
 
 builder.Services.AddSingleton<IContentStorage, YamlContentStorage>();
 
