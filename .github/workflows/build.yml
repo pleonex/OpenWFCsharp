@@ -11,7 +11,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ ubuntu-latest, macos-latest, windows-latest ]
+        os: [ ubuntu-latest, windows-latest ]
         include:
           # By default they are no "main build" but if it matches "os" then yes.
           - os: ubuntu-latest

@@ -10,8 +10,7 @@ public class DeployDockerImagesTask : FrostingTask<BuildContext>
 {
     public override bool ShouldRun(BuildContext context)
     {
-        return context.BuildKind is Cake.Frosting.PleOps.Recipe.BuildKind.Preview
-            or Cake.Frosting.PleOps.Recipe.BuildKind.Stable;
+        return context.BuildKind is Cake.Frosting.PleOps.Recipe.BuildKind.Stable;
     }
 
     public override void Run(BuildContext context)

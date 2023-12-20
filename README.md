@@ -6,6 +6,10 @@
     <img alt="GitHub release" src="https://img.shields.io/github/v/release/pleonex/OpenWFCsharp">
   </a>
   &nbsp;
+  <a href="https://hub.docker.com/r/pleonex/openwfcsharp-nas">
+    <img alt="Docker Image Version" src="https://img.shields.io/docker/v/pleonex/openwfcsharp-nas">
+  </a>
+  &nbsp;
   <a href="https://github.com/pleonex/OpenWFCsharp/actions/workflows/build-and-release.yml">
     <img alt="Build and release" src="https://github.com/pleonex/OpenWFCsharp/actions/workflows/build-and-release.yml/badge.svg?branch=main" />
   </a>
