@@ -28,7 +28,8 @@ public class BuildDotnetDockerImageTask : FrostingTask<BuildContext>
                 ArgumentCustomization = b => b
                     .AppendQuoted("--arch").AppendQuoted(info.Architecture)
                     .AppendQuoted("-p:PublishProfile=DefaultContainer")
-                    .Append("-p").Append($"ContainerImageTags={context.Version}"),
+                    .Append("-p").Append($"ContainerImageTags={context.Version}")
+                    .Append("-p").AppendQuoted($"Version={context.Version}"),
             });
     }
 }

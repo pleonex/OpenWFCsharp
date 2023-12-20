@@ -24,6 +24,10 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ContainerLabel Include="org.opencontainers.image.source" Value="https://github.com/pleonex/OpenWFCsharp" />
+  </ItemGroup>
+
   <!-- Deterministic and source link -->
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
     <!-- Publish the repository URL in the nuget metadata for SourceLink -->

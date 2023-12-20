@@ -46,6 +46,7 @@ public sealed class BuildLifetime : FrostingLifetime<BuildContext>
     {
         // Save the info from the existing artifacts for the next execution (e.g. deploy job)
         context.DeliveriesContext.Save();
+        context.Save();
     }
 }
 
@@ -71,7 +72,8 @@ public sealed class BundleTask : FrostingTask
 
 [TaskName("Deploy")]
 [IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.Common.SetGitVersionTask))]
-[IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.Dotnet.DotnetTasks.DeployProjectTask))]
+[IsDependentOn(typeof(LoadDockerImagesTask))]
+[IsDependentOn(typeof(DeployDockerImagesTask))]
 [IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.GitHub.UploadReleaseBinariesTask))]
 public sealed class DeployTask : FrostingTask
 {

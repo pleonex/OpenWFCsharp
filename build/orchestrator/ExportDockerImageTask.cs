@@ -38,7 +38,7 @@ public class ExportDockerImageTask : FrostingTask<BuildContext>
         try {
             string dockerImagePath = Path.Combine(context.ArtifactsPath, $"{dockerFilename}.zip");
             context.Zip(context.TemporaryPath, dockerImagePath, new string[] { dockerImageTempPath });
-            context.DeliveriesContext.BinaryFiles.Add(dockerImagePath);
+            context.DockerImageArtifacts.Add(dockerImagePath);
         } finally {
             File.Delete(dockerImageTempPath);
         }

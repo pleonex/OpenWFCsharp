@@ -10,6 +10,10 @@ on:
         required: false
         type: string
     secrets:
+      dockerhub_user:
+        required: true
+      dockerhub_token:
+        required: true
       nuget_preview_token:
         required: false
       nuget_stable_token:
@@ -37,8 +41,6 @@ jobs:
   push_artifacts:
     name: "Artifacts"
     runs-on: "ubuntu-latest"
-    # TODO: Deployment
-    if: false
     steps:
       - name: "Checkout"
         uses: actions/checkout@v4
@@ -60,6 +62,12 @@ jobs:
       # Then, we need to setup VSS_NUGET_EXTERNAL_FEED_ENDPOINTS
       - name: "Install Azure Artifacts Credential Provider"
         run: wget -qO- https://aka.ms/install-artifacts-credprovider.sh | bash
+
+      - name: Login in Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.dockerhub_user }}
+          password: ${{ secrets.dockerhub_token }}
 
       - name: "Deploy artifacts"
         run: dotnet run --project build/orchestrator -- --target=Deploy

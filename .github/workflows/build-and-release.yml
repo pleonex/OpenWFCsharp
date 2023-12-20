@@ -26,8 +26,6 @@ jobs:
     uses: ./.github/workflows/deploy.yml
     with:
       dotnet_version: '8.0.100'
-      azure_nuget_feed: ''
     secrets:
-      nuget_preview_token: ""
-      nuget_stable_token: ""
-      azure_nuget_token: ""
+      dockerhub_user: ${{ secrets.DOCKERHUB_USERNAME }}
+      dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
