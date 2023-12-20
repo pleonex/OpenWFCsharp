@@ -1,25 +1,25 @@
-@OpenWFCsharp.Dsl_Host = localhost:5021
-@OpenWFCsharp.Dsl_HostAddress = http://localhost:5021
+@OpenWFCsharp.Dls_Host = localhost:5021
+@OpenWFCsharp.Dls_HostAddress = http://localhost:5021
 
-### DSL1 - count
-POST {{OpenWFCsharp.Dsl_HostAddress}}/download
-Host: {{OpenWFCsharp.Dsl_Host}}
+### DLS1 - count
+POST {{OpenWFCsharp.Dls_HostAddress}}/download
+Host: {{OpenWFCsharp.Dls_Host}}
 User-Agent: Nitro WiFi SDK/5.6
 Content-Type: application/x-www-form-urlencoded
 
 gamecd=VlBZUA%2A%2A&rhgamecd=VlBZUA%2A%2A&passwd=WERnUHI5YVdVang4RzVWZA%2A%2A&token=dks2bmZIY2pPL2VDOHhHdmNGV3J6dnNIYzR3RlZYenBtVFJHNjdzMHNLSjdDSTNoQnBRalpzT1piVFdtVENDRWYrdzJZWVdhVzdVWXBmQ3h3c05ZZkE9PQ%2A%2A&userid=MjAzNDE3NzA3OTU5Mg%2A%2A&macadr=MDAwOWJmMTEyMjMz&action=Y291bnQ%2A&attr1=RVM%2A&apinfo=MDA6MDAwMDAwMC0wMA%2A%2A
 
-### DSL1 - list
-POST {{OpenWFCsharp.Dsl_HostAddress}}/download
-Host: {{OpenWFCsharp.Dsl_Host}}
+### DLS1 - list
+POST {{OpenWFCsharp.Dls_HostAddress}}/download
+Host: {{OpenWFCsharp.Dls_Host}}
 User-Agent: Nitro WiFi SDK/5.6
 Content-Type: application/x-www-form-urlencoded
 
 gamecd=VlBZUA%2A%2A&rhgamecd=VlBZUA%2A%2A&passwd=WERnUHI5YVdVang4RzVWZA%2A%2A&token=OUp1OHU3WndvNTJvWkl3YmIxM3MrTU1SZDByVVh1WW5QUDY3aFN5My9BNXNWUjJaT0ZZT2RZWEZIS1hPRFFscWN0NTNWQkZUaG9UZE5IeHFmb1plRkE9PQ%2A%2A&userid=MjAzNDE3NzA3OTU5Mg%2A%2A&macadr=MDAwOWJmMTEyMjMz&action=bGlzdA%2A%2A&attr1=RVM%2A&apinfo=MDA6MDAwMDAwMC0wMA%2A%2A&offset=MA%2A%2A&num=MQ%2A%2A
 
-### DSL1 - contents
-POST {{OpenWFCsharp.Dsl_HostAddress}}/download
-Host: {{OpenWFCsharp.Dsl_Host}}
+### DLS1 - contents
+POST {{OpenWFCsharp.Dls_HostAddress}}/download
+Host: {{OpenWFCsharp.Dls_Host}}
 User-Agent: Nitro WiFi SDK/5.6
 Content-Type: application/x-www-form-urlencoded
 

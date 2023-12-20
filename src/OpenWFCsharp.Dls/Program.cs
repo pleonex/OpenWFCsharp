@@ -21,7 +21,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opts => {
 #pragma warning disable S1075 // URIs should not be hardcoded
-    opts.SwaggerDoc("v1", new OpenApiInfo {
+    opts.SwaggerDoc("dls", new OpenApiInfo {
         Version = "v1",
         Title = "OpenWFC# - DLS",
         Description = "Download server",
@@ -50,7 +50,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/dls/swagger.json", "OpenWFC# - DLS"));
 }
 
 app.MapControllers();

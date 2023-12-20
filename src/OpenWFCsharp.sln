@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenWFCsharp", "OpenWFCshar
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenWFCsharp.Nas", "OpenWFCsharp.Nas\OpenWFCsharp.Nas.csproj", "{53E247B9-4FB5-42BF-896A-40FC0191D577}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenWFCsharp.Dsl", "OpenWFCsharp.Dsl\OpenWFCsharp.Dsl.csproj", "{8DF29C10-2CB0-46D7-AFF5-B43016669017}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenWFCsharp.Dls", "OpenWFCsharp.Dls\OpenWFCsharp.Dls.csproj", "{8DF29C10-2CB0-46D7-AFF5-B43016669017}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
