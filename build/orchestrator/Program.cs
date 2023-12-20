@@ -21,22 +21,19 @@ public sealed class BuildLifetime : FrostingLifetime<BuildContext>
         // Update build parameters from command line arguments.
         context.ReadArguments();
 
-        context.DotNetContext.ApplicationProjects.Add(new ProjectPublicationInfo(
-            "./src/OpenWFCsharp.Nas", [ "win-x64", "linux-x64", "osx-x64" ], "net8.0"));
-        context.DotNetContext.ApplicationProjects.Add(new ProjectPublicationInfo(
-            "./src/OpenWFCsharp.Dls", [ "win-x64", "linux-x64", "osx-x64" ], "net8.0"));
-
         context.OpenApiProjects.Add(new OpenApiProjectInfo(
             "nas",
             "src/OpenWFCsharp.Nas",
             $"bin/{context.DotNetContext.Configuration}/net8.0/OpenWFCsharp.Nas.dll"));
+        context.DockerProjects.Add(new DotnetDockerProjectInfo(
+            "src/OpenWFCsharp.Nas", "pleonex/openwfcsharp-nas"));
+
         context.OpenApiProjects.Add(new OpenApiProjectInfo(
             "dls",
             "src/OpenWFCsharp.Dls",
             $"bin/{context.DotNetContext.Configuration}/net8.0/OpenWFCsharp.Dls.dll"));
-
-        context.DockerWebProject = "src/OpenWFCsharp.Backend";
-        context.DockerImageName = "pleonex/openwfcsharp-complete";
+        context.DockerProjects.Add(new DotnetDockerProjectInfo(
+            "src/OpenWFCsharp.Dls", "pleonex/openwfcsharp-dls"));
 
         // Print the build info to use.
         context.Print();
@@ -60,8 +57,8 @@ public sealed class DefaultTask : FrostingTask
 [TaskName("Bundle")]
 [IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.Common.SetGitVersionTask))]
 [IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.GitHub.ExportReleaseNotesTask))]
-[IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.Dotnet.DotnetTasks.BundleProjectTask))]
-//TODO: [IsDependentOn(typeof(BuildDockerImageTask))]
+[IsDependentOn(typeof(BuildDotnetDockerImageTask))]
+[IsDependentOn(typeof(ExportDockerImageTask))]
 [IsDependentOn(typeof(ExportOpenApiDocsTask))]
 [IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.DocFx.BuildTask))]
 public sealed class BundleTask : FrostingTask

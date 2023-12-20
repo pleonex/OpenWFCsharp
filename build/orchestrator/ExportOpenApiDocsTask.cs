@@ -3,6 +3,7 @@ namespace BuildSystem;
 using System.Text;
 using Cake.Common.Tools.DotNet;
 using Cake.Common.Tools.DotNet.Tool;
+using Cake.Core.Diagnostics;
 using Cake.Core.Tooling;
 using Cake.Frosting;
 using Cake.Frosting.PleOps.Recipe.Common;
@@ -20,6 +21,12 @@ public class ExportOpenApiDocsTask : FrostingTask<BuildContext>
 
     private void ExportProject(BuildContext context, OpenApiProjectInfo info)
     {
+        context.Log.Information(
+            "Export OpenAPI document: {0} from {1}/{2}",
+            info.DocumentName,
+            info.DotnetProjectPath,
+            info.AssemblyPath);
+
         string outputFilename = $"{info.DocumentName}.swagger.json";
         string outputFile = Path.Combine(context.ArtifactsPath, outputFilename);
 

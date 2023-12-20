@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <Description>Web server that provides authorization to the WFC service.</Description>
+    <ContainerRepository>pleonex/openwfcsharp-nas</ContainerRepository>
 
     <TargetFramework>net8.0</TargetFramework>
     <InvariantGlobalization>true</InvariantGlobalization>

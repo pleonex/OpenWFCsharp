@@ -12,15 +12,12 @@ public class BuildContext : PleOpsBuildContext
         OpenApiProjects = new();
         OpenApiDocFxPath = "docs/rest/";
 
-        DockerWebProject = string.Empty;
-        DockerImageName = string.Empty;
+        DockerProjects = new();
     }
 
     public Collection<OpenApiProjectInfo> OpenApiProjects { get; }
 
     public string OpenApiDocFxPath { get; set; }
 
-    public string DockerWebProject { get; set; }
-
-    public string DockerImageName { get; set; }
+    public Collection<DotnetDockerProjectInfo> DockerProjects { get; }
 }
