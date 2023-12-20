@@ -1,19 +1,27 @@
 version: '3'
 services:
   nas:
-    image: 'pleonex/openwfcsharp-nas:0.1.0-microservices.33'
+    image: 'pleonex/openwfcsharp-nas'
     restart: 'always'
-    ports:
-      - 5120:5120
     depends_on:
       - dls
     environment:
-      NAuthServer__Services__9000: "YOUR_SERVER_DNS"
+      NAuthServer__Services__9000: "YOUR_SERVER_HOSTNAME"
 
   dls:
-    image: 'pleonex/openwfcsharp-dls:0.1.0-microservices.33'
+    image: 'pleonex/openwfcsharp-dls'
+    restart: 'always'
+    volumes:
+      - ./storage:/storage
+    environment:
+      DownloadServer__StorageDB: "/storage/storage.main.yml"
+      DownloadServer__ValidatePasswords: "true"
+
+  reverse_proxy:
+    image: 'nginx:alpine'
     restart: 'always'
     ports:
-      - 5121:5121
+      - 80:80
     volumes:
-      - ./../storage:/storage
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/sites:/etc/nginx/sites-enabled:ro

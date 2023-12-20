@@ -1,5 +1,5 @@
-@OpenWFCsharp.Dls_Host = localhost:5021
-@OpenWFCsharp.Dls_HostAddress = http://localhost:5021
+@OpenWFCsharp.Dls_Host = localhost:5121
+@OpenWFCsharp.Dls_HostAddress = http://localhost:5121
 
 ### DLS1 - count
 POST {{OpenWFCsharp.Dls_HostAddress}}/download
