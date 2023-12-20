@@ -3,6 +3,7 @@
 using System.Net.Mime;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using OpenWFCsharp.Messages.Nas;
 using OpenWFCsharp.Nas.Identity;
 
@@ -11,20 +12,11 @@ using OpenWFCsharp.Nas.Identity;
 /// </summary>
 [Route("ac")]
 [ApiController]
-public class NAuthenticationServerController : ControllerBase
+public class NAuthenticationServerController(
+    ILogger<NAuthenticationServerController> logger,
+    IOptions<NAuthenticationServerOptions> options)
+    : ControllerBase
 {
-    private readonly ILogger<NAuthenticationServerController> logger;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="NAuthenticationServerController"/> class.
-    /// </summary>
-    /// <param name="logger">Logger for the instance.</param>
-    public NAuthenticationServerController(ILogger<NAuthenticationServerController> logger)
-    {
-        ArgumentNullException.ThrowIfNull(logger);
-        this.logger = logger;
-    }
-
     /// <summary>
     /// Sends an action request to the auth service..
     /// </summary>
@@ -79,20 +71,15 @@ public class NAuthenticationServerController : ControllerBase
     private ActionResult<NasResponse> ProcessSvcLoc(NasRequest request)
     {
         // TODO: verify user was registered in DB via login
-        if (request.ServiceLocation.Service == -1) {
+        int serviceRequest = request.ServiceLocation.Service;
+        if (serviceRequest == -1) {
             return BadRequest("Missing service");
         }
 
-        // TODO: support other services
-        if (request.ServiceLocation.Service != 9000) {
-            return NotFound($"Cannot find service: {request.ServiceLocation.Service}");
-        }
-
-        // TODO: support micro-service arch by reading other services from config-file.
-        // for now it's only us here.
-        string? serviceHost = Request.Headers.Host;
-        if (serviceHost is null) {
-            return BadRequest("Cannot determine myself. Please provide the 'host' header");
+        var knownServices = options.Value.Services;
+        if (!knownServices.TryGetValue(serviceRequest, out string? serviceHost)
+            || string.IsNullOrEmpty(serviceHost)) {
+            return NotFound($"Cannot find service: {serviceRequest}");
         }
 
         // TODO: register service token for the targeted service

@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.OpenApi.Models;
 using OpenWFCsharp.Messages.Formatters;
+using OpenWFCsharp.Nas;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +10,9 @@ builder.Services.AddControllers(opts => {
     opts.OutputFormatters.Insert(0, new DwcOutputFormatter());
     opts.InputFormatters.Insert(0, new DwcInputFormatter());
 });
+
+builder.Services.Configure<NAuthenticationServerOptions>(
+    builder.Configuration.GetSection(NAuthenticationServerOptions.OptionName));
 
 builder.Services.AddControllers();
 
