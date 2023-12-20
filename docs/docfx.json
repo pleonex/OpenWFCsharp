@@ -1,23 +1,24 @@
 {
   "metadata": [
-    // {
-    //   "src": [
-    //     {
-    //       "files": [
-    //       ],
-    //       "src": "../src"
-    //     }
-    //   ],
-    //   "dest": "api",
-    //   "includePrivateMembers": false,
-    //   "disableGitFeatures": false,
-    //   "disableDefaultFilter": false,
-    //   "noRestore": false,
-    //   "namespaceLayout": "flattened",
-    //   "memberLayout": "samePage",
-    //   "EnumSortOrder": "alphabetic",
-    //   "allowCompilationErrors": false
-    // }
+    {
+      "src": [
+        {
+          "files": [
+            "OpenWFCsharp/*.csproj"
+          ],
+          "src": "../src"
+        }
+      ],
+      "dest": "api",
+      "includePrivateMembers": false,
+      "disableGitFeatures": false,
+      "disableDefaultFilter": false,
+      "noRestore": false,
+      "namespaceLayout": "flattened",
+      "memberLayout": "samePage",
+      "EnumSortOrder": "alphabetic",
+      "allowCompilationErrors": false
+    }
   ],
   "build": {
     "content": [

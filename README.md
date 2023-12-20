@@ -24,7 +24,9 @@ technologies.
 - 🌍 **Connectivity test** (`conntest`): ✅ Implemented
 - 👤 **Authorization** (`nas`): 🌱 Basic implementation
   - Supported actions: `login`, `SVCLOC`
-  - It doesn't perform any user auth or registration.
+  - It doesn't perform any user auth or registration. Emulators don't randomize
+    the MAC address of the DS, which means that for the server everyone using an
+    emulator would be the same user.
 - 🔽 **Download** (`dls1`): ✅ Implemented
   - Supported actions: `count`, `list`, `contents`
   - It doesn't support return of random files (mystery gift)

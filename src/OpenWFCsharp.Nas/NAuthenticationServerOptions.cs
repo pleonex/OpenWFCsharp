@@ -19,5 +19,5 @@ public class NAuthenticationServerOptions
     /// <summary>
     /// Gets or sets the collection of service IDs and their hostname.
     /// </summary>
-    public IReadOnlyDictionary<int, string> Services { get; set; } = new Dictionary<int, string>();
+    public Dictionary<int, string> Services { get; set; } = new();
 }

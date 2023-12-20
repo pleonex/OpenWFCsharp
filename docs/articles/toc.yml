@@ -7,7 +7,9 @@
   href: ./getting-started/architecture.md
 
 - name: 📃 API docs
-- name: REST API
-  href: ../rest/v1.swagger.json
-# - name: .NET models
-#   href: ../api/toc.yml
+- name: NAS web API
+  href: ../rest/nas.swagger.json
+- name: DLS web API
+  href: ../rest/dls.swagger.json
+- name: .NET API
+  href: ../api/toc.yml

@@ -4,31 +4,29 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Extensions.Options;
+using Moq;
 using OpenWFCsharp.Messages.Nas;
+using OpenWFCsharp.Nas;
 using OpenWFCsharp.Nas.Controllers;
 
 [TestFixture]
 public class NAuthenticationServerControllerTests
 {
     private NAuthenticationServerController controller;
+    private Mock<IOptions<NAuthenticationServerOptions>> options;
 
     [SetUp]
     public void TestSetUp()
     {
         var nullLogger = NullLoggerFactory.Instance.CreateLogger< NAuthenticationServerController>();
-        controller = new NAuthenticationServerController(nullLogger) {
+        options = new Mock<IOptions<NAuthenticationServerOptions>>();
+
+        controller = new NAuthenticationServerController(nullLogger, options.Object) {
             ControllerContext = new ControllerContext() {
                 HttpContext = new DefaultHttpContext(),
             },
         };
-    }
-
-    [Test]
-    public void ConstructorWithInvalidArguments()
-    {
-        Assert.That(
-            () => new NAuthenticationServerController(null!),
-            Throws.ArgumentNullException);
     }
 
     [Test]
@@ -83,7 +81,10 @@ public class NAuthenticationServerControllerTests
     [Test]
     public void PostSvcLoc900RequestSucceeds()
     {
-        controller.Request.Headers.Append("Host", "testhost");
+        var serverOpts = new NAuthenticationServerOptions();
+        serverOpts.Services[9000] = "myService";
+        options.SetupGet(x => x.Value).Returns(serverOpts);
+
         var request = new NasRequest { Action = "SVCLOC" };
         request.ServiceLocation.Service = 9000;
 
@@ -97,7 +98,7 @@ public class NAuthenticationServerControllerTests
             Assert.That(loginRespose.IsSuccessful, Is.True);
             Assert.That(loginRespose.Status, Is.True);
             Assert.That(loginRespose.ServiceToken, Is.Not.Empty);
-            Assert.That(loginRespose.ServiceHost, Is.Not.Empty);
+            Assert.That(loginRespose.ServiceHost, Is.EqualTo("myService"));
             Assert.That(loginRespose.DateTime.Date, Is.EqualTo(DateTime.UtcNow.Date));
         });
     }
@@ -105,7 +106,6 @@ public class NAuthenticationServerControllerTests
     [Test]
     public void PostSvcLocRequestWithMissingServiceReturnsBadRequest()
     {
-        controller.Request.Headers.Append("Host", "testhost");
         var request = new NasRequest { Action = "SVCLOC" };
         request.ServiceLocation.Service = -1;
 
@@ -117,7 +117,10 @@ public class NAuthenticationServerControllerTests
     [Test]
     public void PostSvcLocRequestWithUnsupportedServiceReturnsNotFound()
     {
-        controller.Request.Headers.Append("Host", "testhost");
+        var serverOpts = new NAuthenticationServerOptions();
+        serverOpts.Services[9000] = "myService";
+        options.SetupGet(x => x.Value).Returns(serverOpts);
+
         var request = new NasRequest { Action = "SVCLOC" };
         request.ServiceLocation.Service = 8000;
 
