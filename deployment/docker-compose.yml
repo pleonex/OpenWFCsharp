@@ -1,0 +1,19 @@
+version: '3'
+services:
+  nas:
+    image: 'pleonex/openwfcsharp-nas:0.1.0-microservices.33'
+    restart: 'always'
+    ports:
+      - 5120:5120
+    depends_on:
+      - dls
+    environment:
+      NAuthServer__Services__9000: "YOUR_SERVER_DNS"
+
+  dls:
+    image: 'pleonex/openwfcsharp-dls:0.1.0-microservices.33'
+    restart: 'always'
+    ports:
+      - 5121:5121
+    volumes:
+      - ./../storage:/storage
