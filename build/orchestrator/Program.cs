@@ -21,6 +21,9 @@ public sealed class BuildLifetime : FrostingLifetime<BuildContext>
         // Update build parameters from command line arguments.
         context.ReadArguments();
 
+        context.ResourcesToBundle.Add("./storage");
+        context.ResourcesToBundle.Add("./deployment");
+
         context.OpenApiProjects.Add(new OpenApiProjectInfo(
             "nas",
             "src/OpenWFCsharp.Nas",
@@ -57,6 +60,7 @@ public sealed class DefaultTask : FrostingTask
 [TaskName("Bundle")]
 [IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.Common.SetGitVersionTask))]
 [IsDependentOn(typeof(Cake.Frosting.PleOps.Recipe.GitHub.ExportReleaseNotesTask))]
+[IsDependentOn(typeof(BundleResourcesTask))]
 [IsDependentOn(typeof(BuildDotnetDockerImageTask))]
 [IsDependentOn(typeof(ExportDockerImageTask))]
 [IsDependentOn(typeof(ExportOpenApiDocsTask))]

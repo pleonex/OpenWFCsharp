@@ -13,6 +13,8 @@ public class BuildContext : PleOpsBuildContext
         OpenApiDocFxPath = "docs/rest/";
 
         DockerProjects = new();
+
+        ResourcesToBundle = new();
     }
 
     public Collection<OpenApiProjectInfo> OpenApiProjects { get; }
@@ -20,4 +22,6 @@ public class BuildContext : PleOpsBuildContext
     public string OpenApiDocFxPath { get; set; }
 
     public Collection<DotnetDockerProjectInfo> DockerProjects { get; }
+
+    public Collection<string> ResourcesToBundle { get; }
 }
