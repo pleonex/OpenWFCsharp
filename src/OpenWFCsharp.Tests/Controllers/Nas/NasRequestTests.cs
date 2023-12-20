@@ -2,7 +2,7 @@
 
 using System;
 using System.Collections.Generic;
-using OpenWFCsharp.Backend.Controllers.Nas;
+using OpenWFCsharp.Messages.Nas;
 
 [TestFixture]
 public class NasRequestTests

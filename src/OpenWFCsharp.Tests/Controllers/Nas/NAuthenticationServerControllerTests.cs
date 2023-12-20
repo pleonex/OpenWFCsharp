@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using OpenWFCsharp.Backend.Controllers.Nas;
+using OpenWFCsharp.Messages.Nas;
+using OpenWFCsharp.Nas.Controllers;
 
 [TestFixture]
 public class NAuthenticationServerControllerTests
@@ -74,7 +75,7 @@ public class NAuthenticationServerControllerTests
             Assert.That(loginRespose.IsSuccessful, Is.True);
             Assert.That(loginRespose.Token, Is.Not.Empty);
             Assert.That(loginRespose.Challenge, Is.Not.Empty);
-            Assert.That(loginRespose.DateTime.Date, Is.EqualTo(DateTime.Today));
+            Assert.That(loginRespose.DateTime.Date, Is.EqualTo(DateTime.UtcNow.Date));
             Assert.That(loginRespose.Locator, Is.Not.Empty);
         });
     }
@@ -97,7 +98,7 @@ public class NAuthenticationServerControllerTests
             Assert.That(loginRespose.Status, Is.True);
             Assert.That(loginRespose.ServiceToken, Is.Not.Empty);
             Assert.That(loginRespose.ServiceHost, Is.Not.Empty);
-            Assert.That(loginRespose.DateTime.Date, Is.EqualTo(DateTime.Today));
+            Assert.That(loginRespose.DateTime.Date, Is.EqualTo(DateTime.UtcNow.Date));
         });
     }
 

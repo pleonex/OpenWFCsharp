@@ -5,6 +5,9 @@
     <Company>None</Company>
     <Copyright>Copyright (C) 2023 pleonex</Copyright>
 
+    <!-- Overwritten during build system - This is the value for devs -->
+    <Version>0.0.0-dev</Version>
+
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
 
     <!-- By default no project generates libs (pack nuget). Enable it per project.

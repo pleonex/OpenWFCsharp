@@ -21,7 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\OpenWFCsharp.Backend\OpenWFCsharp.Backend.csproj" />
+    <ProjectReference Include="..\OpenWFCsharp.Dsl\OpenWFCsharp.Dsl.csproj" />
+    <ProjectReference Include="..\OpenWFCsharp.Nas\OpenWFCsharp.Nas.csproj" />
   </ItemGroup>
 
 </Project>

@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
-using OpenWFCsharp.Backend.Controllers.Dls;
-using OpenWFCsharp.Backend.Controllers.Dls.Storage;
+using OpenWFCsharp.Dls.Controllers;
+using OpenWFCsharp.Dls.Storage;
+using OpenWFCsharp.Messages.Dls;
 
 [TestFixture]
 public class DownloadServerControllerTests

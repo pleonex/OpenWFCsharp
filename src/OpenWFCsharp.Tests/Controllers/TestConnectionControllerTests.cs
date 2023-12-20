@@ -2,7 +2,7 @@
 
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OpenWFCsharp.Backend.Controllers;
+using OpenWFCsharp.Nas.Controllers;
 
 [TestFixture]
 public class TestConnectionControllerTests

@@ -1,7 +1,7 @@
 ﻿namespace OpenWFCsharp.Tests.Controllers.Dls;
 
 using System.Collections.Generic;
-using OpenWFCsharp.Backend.Controllers.Dls;
+using OpenWFCsharp.Messages.Dls;
 
 [TestFixture]
 public class DlsRequestTests
