@@ -11,7 +11,7 @@ builder.Services.AddControllers(opts => {
     opts.InputFormatters.Insert(0, new DwcInputFormatter());
 });
 
-builder.Services.AddSingleton<IContentStorage, YamlContentStorage>();
+builder.Services.AddSingleton<IContentStorage, FileSystemContentStorage>();
 
 builder.Services.Configure<DownloadServerOptions>(
     builder.Configuration.GetSection(DownloadServerOptions.OptionName));

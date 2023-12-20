@@ -8,17 +8,17 @@ using YamlDotNet.Serialization;
 /// <summary>
 /// Content storage based on folders on disk and YAML information.
 /// </summary>
-public class YamlContentStorage : IContentStorage
+public class FileSystemContentStorage : IContentStorage
 {
-    private readonly ILogger<YamlContentStorage> logger;
+    private readonly ILogger<FileSystemContentStorage> logger;
     private readonly List<GameSupportInfo> games;
     private readonly DownloadServerOptions serverOptions;
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="YamlContentStorage"/> class.
+    /// Initializes a new instance of the <see cref="FileSystemContentStorage"/> class.
     /// </summary>
-    public YamlContentStorage(
-        ILogger<YamlContentStorage> logger,
+    public FileSystemContentStorage(
+        ILogger<FileSystemContentStorage> logger,
         IOptions<DownloadServerOptions> serverOptions)
     {
         this.logger = logger;
