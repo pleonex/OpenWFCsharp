@@ -40,7 +40,7 @@ public record NasUserInfo
     /// Gets or sets the ID of the user.
     /// </summary>
     public long UserId {
-        get => parameters.ContainsKey("userid") ? long.Parse(parameters["userid"]!) : -1;
+        get => parameters.ContainsKey("userid") ? long.Parse(parameters["userid"]!) : 2;
         set => parameters["userid"] = value.ToString();
     }
 

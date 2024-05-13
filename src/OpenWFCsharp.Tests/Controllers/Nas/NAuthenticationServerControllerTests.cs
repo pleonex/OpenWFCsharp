@@ -59,6 +59,41 @@ public class NAuthenticationServerControllerTests
     }
 
     [Test]
+    public void PostAcctCreateRequestSucceeds()
+    {
+        var request = new NasRequest { Action = "acctcreate" };
+        request.UserInfo.UserId = 42;
+
+        var result = controller.PostNasRequest(request);
+        var response = (result.Value as NasAcctCreateResponse)!;
+
+        Assert.That(result.Result, Is.Null);
+        Assert.That(result.Value, Is.InstanceOf<NasAcctCreateResponse>());
+        Assert.Multiple(() => {
+            Assert.That(response.ReturnCode, Is.EqualTo((int)NasReturnCodes.AccountCreated));
+            Assert.That(response.IsSuccessful, Is.True);
+            Assert.That(response.UserId, Is.EqualTo(42.ToString().PadLeft(13, '0')));
+        });
+    }
+
+    [Test]
+    public void PostAcctCreateRequestWithoutUserIdReturnsUser2()
+    {
+        var request = new NasRequest { Action = "acctcreate" };
+
+        var result = controller.PostNasRequest(request);
+        var response = (result.Value as NasAcctCreateResponse)!;
+
+        Assert.That(result.Result, Is.Null);
+        Assert.That(result.Value, Is.InstanceOf<NasAcctCreateResponse>());
+        Assert.Multiple(() => {
+            Assert.That(response.ReturnCode, Is.EqualTo((int)NasReturnCodes.AccountCreated));
+            Assert.That(response.IsSuccessful, Is.True);
+            Assert.That(response.UserId, Is.EqualTo(2.ToString().PadLeft(13, '0')));
+        });
+    }
+
+    [Test]
     public void PostLoginRequestSucceeds()
     {
         var request = new NasRequest { Action = "login" };
