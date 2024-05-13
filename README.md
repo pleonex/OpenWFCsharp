@@ -27,7 +27,7 @@ technologies.
 
 - 🌍 **Connectivity test** (`conntest`): ✅ Implemented
 - 👤 **Authorization** (`nas`): 🌱 Basic implementation
-  - Supported actions: `login`, `SVCLOC`
+  - Supported actions: `acctcreate`, `login`, `SVCLOC`
   - It doesn't perform any user auth or registration. Emulators don't randomize
     the MAC address of the DS, which means that for the server everyone using an
     emulator would be the same user.

@@ -15,11 +15,15 @@ using Microsoft.Net.Http.Headers;
 /// </remarks>
 public class DwcInputFormatter : TextInputFormatter
 {
+    private readonly ILogger<DwcInputFormatter> logger;
+
     /// <summary>
     /// Initializes a new instance of the <see cref="DwcInputFormatter"/> class.
     /// </summary>
-    public DwcInputFormatter()
+    public DwcInputFormatter(ILogger<DwcInputFormatter> logger)
     {
+        this.logger = logger;
+
         SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse(MediaTypeNames.Application.FormUrlEncoded));
 
         SupportedEncodings.Add(Encoding.UTF8);
@@ -36,7 +40,13 @@ public class DwcInputFormatter : TextInputFormatter
         Encoding encoding)
     {
         try {
-            Dictionary<string, string?> parameters = Decode(context.HttpContext.Request.Form);
+            IFormCollection inputBody = context.HttpContext.Request.Form;
+            logger.LogDebug(
+                "Received DWC input: {InputForm}",
+                string.Join("&", inputBody.Select(kvp => $"{kvp.Key}={kvp.Value}")));
+
+            Dictionary<string, string?> parameters = Decode(inputBody);
+            logger.LogDebug("Decoded DWC input: {DecodedInputForm}", parameters);
 
             object? model = Activator.CreateInstance(context.ModelType, parameters);
             return await InputFormatterResult.SuccessAsync(model).ConfigureAwait(false);

@@ -7,8 +7,13 @@ using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+ILoggerFactory setupLogFactory = LoggerFactory.Create(config => config
+    .SetMinimumLevel(LogLevel.Debug)
+    .AddConsole());
 builder.Services.AddControllers(opts => {
-    opts.InputFormatters.Insert(0, new DwcInputFormatter());
+    opts.InputFormatters.Insert(
+        0,
+        new DwcInputFormatter(setupLogFactory.CreateLogger<DwcInputFormatter>()));
 });
 
 builder.Services.AddSingleton<IContentStorage, FileSystemContentStorage>();

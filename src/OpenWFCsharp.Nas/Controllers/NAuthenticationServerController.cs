@@ -22,7 +22,7 @@ public class NAuthenticationServerController(
     /// </summary>
     /// <param name="data">URL-NBase64 encoded data with the request.</param>
     /// <returns>Operation result.</returns>
-    /// <remarks>Supported actions are: login, SVCLOC.</remarks>
+    /// <remarks>Supported actions are: acctcreate, login, SVCLOC.</remarks>
     /// <response code="200">Request processed, see output for the request success.</response>
     /// <response code="400">Request missing 'action' parameter or 'host' header.</response>
     /// <response code="404">Unknown action request value or unknown service location.</response>
@@ -45,10 +45,25 @@ public class NAuthenticationServerController(
         }
 
         return data.Action switch {
+            "acctcreate" => ProcessCreateAccount(data), // DSi only?
             "login" => ProcessLogin(),
             "SVCLOC" => ProcessSvcLoc(data),
             _ => NotFound($"Unknown action: '{data.Action}'"),
         };
+    }
+
+    private ActionResult<NasResponse> ProcessCreateAccount(NasRequest data)
+    {
+        // TODO: check banned users by userid / bssid / apinfo / macaddr
+        // TODO: register user in DB storing user info and returning ID
+        var response = new NasAcctCreateResponse {
+            ReturnCode = (int)NasReturnCodes.AccountCreated,
+            // must be 13-chars, same as input or from our DB?
+            UserId = data.UserInfo.UserId.ToString().PadLeft(13, '0'),
+        };
+
+        logger.LogDebug("Response parameters: {data}", response);
+        return response;
     }
 
     private ActionResult<NasResponse> ProcessLogin()

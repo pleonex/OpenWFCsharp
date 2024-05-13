@@ -6,9 +6,14 @@ using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 
+ILoggerFactory setupLogFactory = LoggerFactory.Create(config => config
+    .SetMinimumLevel(LogLevel.Debug)
+    .AddConsole());
 builder.Services.AddControllers(opts => {
     opts.OutputFormatters.Insert(0, new DwcOutputFormatter());
-    opts.InputFormatters.Insert(0, new DwcInputFormatter());
+    opts.InputFormatters.Insert(
+        0,
+        new DwcInputFormatter(setupLogFactory.CreateLogger<DwcInputFormatter>()));
 });
 
 builder.Services.Configure<NAuthenticationServerOptions>(
